@@ -19,7 +19,7 @@ class TelegramNotifier:
             log.warning("⚠️ TelegramNotifier desativado: token ou chat_id não configurados")
             
     def _build_message(self, event: dict) -> str:
-        label = event.get("label", "Alerta")
+        label = event.get("label", "")
         sensor_id = event.get("sensor_id", "-")
         desc = event.get("Desc", "")
         anomaly_score = event.get("anomaly_score", 0)

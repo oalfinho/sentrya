@@ -10,7 +10,9 @@ export default function AlertsPage() {
   const { data, events, anomalies } = useSensorData();
 
   // Monta lista de alertas a partir dos eventos acumulados do WS
-  const alerts = events.map((ev) => ({
+ const alerts = events
+  .filter((ev) => ev != null)
+  .map((ev) => ({
     id: ev.id,
     title: ev.title,
     location: ev.sensor_id,
@@ -36,8 +38,10 @@ export default function AlertsPage() {
     trend: "up",
   }));
 
-  const criticalCount = events.filter((e) => e.level === "danger").length;
-  const progressiveCount = events.filter((e) => e.level === "warn").length;
+  const validEvents = (events || []).filter((e) => e != null);
+
+  const criticalCount = validEvents.filter((e) => e.level === "danger").length;
+  const progressiveCount = validEvents.filter((e) => e.level === "warn").length;
 
   return (
     <div className="space-y-6">
